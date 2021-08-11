@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Encryption Decryption Application</title>
+    <link rel="stylesheet" href="../static/styles.css">
+</head>
+
+<body>
+    <h2>{{email}}</h2>
+    <!-- Plaint Text -->
+    <div id="plain-text-container">
+        <h4>Plain Text</h4>
+        <form action="{{ url_for('encrypt') }}" , method="post">
+            <textarea name="plain-text" cols="80" rows="8">{{plain_text}}</textarea>
+            <br>
+            <button type="submit">Encrypt</button>
+        </form>
+    </div>
+
+    <!-- Encrypted Text -->
+    <div id="encrypted-container">
+        <h4>Encrypted Text</h4>
+        {{encrypted_text}}
+        <br>
+        <br>
+        <form action="{{ url_for('decrypt') }}" , method="post">
+            <button type="submit">Decrypt</button>
+        </form>
+    </div>
+
+    <!-- Decrypted Text -->
+    <div id="decrypted-container">
+        <h4>Decrypted Text</h4>
+        <div id="decrypted-text">
+            {{decrypted_text}}
+        </div>
+    </div>
+
+    <!-- Send Email -->
+    <div id="send-container">
+        <h4>Send To</h4>
+        <form enctype=multipart/form-data action="{{ url_for('send') }}" method="post">
+            <input type="email" name="recipient" id="recipient" placeholder="email">
+            <input type=file name=photo>
+            <button type="submit">Send </button>
+        </form>
+    </div>
+
+
+    <div id="recieved-container">
+        <h4>Received Messages</h4>
+        <table style="width:80%">
+            <tr>
+                <th>Sender</th>
+                <th>Encryted Message</th>
+                <th>Decrypted Message</th>
+            </tr>
+            {% for row in messages %}
+            <tr>
+                <td>{{ row[0] }}</td>
+                <td>{{ row[1] }}</td>
+                <td>{{ row[2] }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+
+    <div id="recieved-container">
+        <h4>Received Images</h4>
+        <table style="width:80%">
+            <tr>
+                <th>Sender</th>
+                <th>Image</th>
+            </tr>
+            {% for row in images %}
+            <tr>
+                <td>{{ row[0] }}</td>
+                <td>
+                    <img src="../static/images/{{ row[1] }}">
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+</body>
+
+</html>
